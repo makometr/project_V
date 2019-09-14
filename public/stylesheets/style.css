@@ -1,0 +1,12 @@
+
+#plus-1, #plus-2, #plus-3 {
+  font-family: monospace;
+  margin: 10px 0; padding: 2px 9px;
+  margin: 10px 0; padding: 2px 9px;
+  margin: 10px 0; padding: 2px 9px;
+}
+
+.QuestBlockChoose, .StationBlock {
+  border-bottom: 6px solid #ccc;
+  border-top: 6px solid #ccc;
+}

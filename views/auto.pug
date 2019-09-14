@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  header(class="w3-container w3-card-4 w3-theme")
+    h2(class="w3-center") #{title}
+  div(class="w3-panel")
+    div(class="w3-row w3-center")
+      //- div(class="w3-col s9 w3-container w3-center")
+      //- p(class="w3-left") Какой-то текст для посянений если надо
+      div(class="w3-container w3-light-grey")
+        label(class="w3-left") Название команды
+        input#UserLogin(class="w3-input w3-border w3-round" type="text" style="margin-top: 10px")
+        label(class="w3-left") Пароль
+        input#UserPassword(class="w3-input w3-border w3-round" type="text" style="margin-top: 10px")
+        p
+          case type
+            when "register"
+                button(class="w3-button w3-theme w3-round-large w3-border"
+                       onClick="registerUser()") Создать команду
+            when "login"
+                button(class="w3-button w3-theme w3-round-large w3-border"
+                       onClick="checkUser()") Войти
+    div#MsgParent(class="w3-row w3-center") 

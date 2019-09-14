@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  header(class="w3-container w3-card-4 w3-theme")
+    h1(class="w3-center") #{title}
+  div(class="w3-panel")
+    div.QuestBlockChoose#quest-0(class="w3-row w3-light-grey w3-padding-small")
+      div(class="w3-col w3-left" onClick="chooseQuest('quest-0')")
+        h3(class="w3-show-inline-block") 1) Взрослый квест
+        div#plus-2(class="w3-border w3-circle w3-right w3-show-inline-block w3-large" onClick="rollQuest('accordion-2', 'plus-2')") +
+    div#accordion-2(class="w3-row w3-white w3-hide w3-animate-left")
+      div(class="w3-col w3-margin-left")
+        h6 Состоит из 6 станций. Какое-то там ещё описание.
+        h6 Второй абзац
+
+    div.QuestBlockChoose#quest-1(class="w3-row w3-light-grey w3-padding-small")
+      div(class="w3-col w3-left" onClick="chooseQuest('quest-1')")
+        h3(class="w3-show-inline-block") 2) Супер квест
+        div#plus-3(class="w3-border w3-circle w3-right w3-show-inline-block w3-large" onClick="rollQuest('accordion-3', 'plus-3')") +
+    div#accordion-3(class="w3-row w3-white w3-hide w3-animate-left")
+      div(class="w3-col w3-margin-left")
+        h6 Состоит из 6 станций. Какое-то там ещё описание.
+        h6 Второй абзац
+
+
+    p.w3-center
+      button(class="w3-button w3-center w3-theme w3-large w3-round-xlarge" style="width:70%;" onClick="acceptQuest()") Выбрать
+  footer(class="w3-container w3-theme" style="position:relative")
+    .w3-left.w3-show-inline-block.w3-center
+      p#TeamName
+    div.w3-right.w3-show-inline-block(onClick="quitTeam()")
+      p(style="text-decoration: underline") Сменить

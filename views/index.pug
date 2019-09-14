@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  header(class="w3-container w3-card-4 w3-theme")
+    h2(class="w3-center") Добро пожаловать на квест!
+  div(class="w3-panel")
+    div(class="w3-row w3-center ")
+      //- div(class="w3-col s9 w3-container w3-center")
+      h4 Моя команда ещё не зарегистрирована
+      button(class="w3-button w3-theme w3-round-large w3-border w3-center"
+             onClick="GoToRegister()") Регистрация
+    hr(style="margin:0px; margin-top:20px")
+    div(class="w3-row w3-center")
+      //- div(class="w3-col s9 w3-container w3-center")
+      h4 У нас уже есть команда
+      button(class="w3-button w3-theme w3-round-large w3-border w3-center"
+             onClick="GoToLogin()") Войти
+  
+  //- div(class="w3-container w3-center")
+  //-   div(class="w3-cell-row w3-center")
+  //-     div(class="w3-cell w3-center")
+  //-       h4 Ещё какой-то текст можно сюда добавить при большом желании
+  //-   div(class="w3-cell-row w3-center")
+  //-     div(class="w3-cell w3-center")
+  //-       p
+  //-         button(class="w3-button w3-light-green w3-round-large w3-border w3-center"
+  //-               onClick="GoToRegister()") Создать команду для квеста
+  //-   div(class="w3-cell-row w3-center")
+  //-     div(class="w3-cell w3-center")
+  //-       p
+  //-         button(class="w3-button w3-light-green w3-round-large w3-border w3-center"
+  //-                 onClick="GoToLogin()") У меня уже есть команда!
+        
