@@ -33,7 +33,7 @@ function registerUser(){
             window.localStorage.setItem("pass", password);
 
             setTimeout(() => {  
-                document.location.href = "/map?" + getBody();
+                document.location.href = "/content?" + getBody();
             }, 1500);
         }
     });
@@ -58,13 +58,13 @@ function checkUser(){
     $.post("/checkUser", {login: login, password: password}, (data) => {
         data = JSON.parse(data)
         console.log("Response from server checking:", data)
-        if (data == false){
+        if (data.isExist == false){
             var divCont = document.createElement("div")
             divCont.className = "w3-panel w3-red w3-display-container w3-round"
             divCont.innerHTML = "<h3>Ошибка!</h3><p>Неверные данные!</p>"
             parent.append(divCont)
         }
-        else {
+        else if (data.type == "player" || data.type == "adminVolo") {
             var divCont = document.createElement("div")
             divCont.className = "w3-panel w3-green w3-display-container w3-round"
             divCont.innerHTML = "<h3>Успех!</h3><p>Вход...</p>"
@@ -73,9 +73,16 @@ function checkUser(){
             window.localStorage.setItem("login", login);
             window.localStorage.setItem("pass", password);
 
-            setTimeout(() => {  
-                document.location.href = "/map?" + getBody();
-            }, 1500);
+            if (data.type == "player"){
+                setTimeout(() => {  
+                    document.location.href = "/content?" + getBody();
+                }, 1500);
+            }
+            if (data.type == "adminVolo"){
+                setTimeout(() => {  
+                    document.location.href = "/content?" + getBody();
+                }, 1500);
+            }
         }
     });
 }
@@ -113,7 +120,7 @@ $(document).ready(() => {
         nameElem.innerHTML = "<b>Команда:</b> " + localStorage.getItem("login")
         
     let elemsChoosen = document.getElementsByClassName("StationBlock")
-    if (elemsChoosen){
+    if (elemsChoosen.length != 0){
         for (elem of elemsChoosen){
                 elem.classList.replace("w3-light-green", "w3-light-grey")
                 elem.style.borderBottomColor = "#ccc"
@@ -139,7 +146,7 @@ $(document).ready(() => {
             if (count == data.length){
                 document.getElementById('modalWinner').style.display='block';
                 setTimeout(() => {  
-                    document.location.href = "/map?" + getBody();
+                    document.location.href = "/content?" + getBody();
                 }, 3000);
             }
         }); 

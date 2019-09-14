@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  header(class="w3-container w3-card-4 w3-theme")
+    h2(class="w3-center") Страница волонтёра
+  div(class="w3-panel")
+  footer(class="w3-container w3-theme" style="position:relative")
+    .w3-left.w3-show-inline-block.w3-center
+      p#TeamName
+    div.w3-right.w3-show-inline-block(onClick="document.location.href = '/login?' + getBody()")
+      p(style="text-decoration: underline") Все квесты

@@ -5,19 +5,24 @@ var teamManager = require('../teams')
 teamManager.load()
 const progressManager = require("../playerProgress")
 
+const adminData = {
+  login: "admin",
+  password: "sas"
+}
+
 progressManager.load()
 // teamManager.addTeam("memo-2", "password")
 // progressManager.addTeam("memo-2")
 // progressManager.chooseQuestType("memo-2", 1)
 // progressManager.markTeamStationVisited("memo-2", 0, 0)
 
-/* GET home page. */
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Главная' });
 });
 
 router.get('/register', function(req, res, next) {
-  console.log("register data:", req.query.login)
+  console.log("Register data:", req.query.login, req.query.password)
   if (!req.query.login || !req.query.password || req.query.login == "null" || req.query.password == "null"){
     res.render('auto', { title: 'Регистрация команды', type: 'register' });
   }
@@ -30,13 +35,31 @@ router.get('/login', function(req, res, next) {
   if (!req.query.login  || !req.query.password || req.query.login == "null" || req.query.password == "null"){
     res.render('auto', { title: 'Вход', type: 'login' });
   }
+  else if (req.query.login == "admin" && req.query.password == "kek"){
+    res.render('volunteer')
+  }
   else {
     res.render('choose', { title: "Выбор квеста"});
   }
 });
 
-router.get('/map', function(req, res, next) {
-  res.render('choose', { title: "Выбор квеста"});
+router.get('/content', function(req, res, next) {
+  let login = req.query.login
+  let password = req.query.password
+  let UserType = whoIsUser(login, password)
+
+  switch (UserType){
+    case "player":
+      res.render('choose', { title: "Выбор квеста"});
+      break
+    case "adminVolo":
+      res.render('volunteer');
+      break
+    case "unknown":
+      res.render('index', { title: 'Главная' });
+      break
+    default: throw "UserType Error!"
+  }
 });
 
 
@@ -101,11 +124,18 @@ router.get("/seeStations", function(req, res, next){
 router.post("/getVisitedStations", function(req, res, next){
   let login = req.body.login
   let password = req.body.password
+  let UserType = whoIsUser(login, password)
 
-  if (teamManager.findTeam(login, password)){
-    let bools = progressManager.getBoolArrayOfVisit(login)
-    console.log(bools)
-    res.end(JSON.stringify(bools))
+  switch (UserType){
+    case "player":
+    case "adminVolo":
+      let bools = progressManager.getBoolArrayOfVisit(login)
+      console.log(bools)
+      res.end(JSON.stringify(bools))
+      break
+    case "unknown":
+      break
+    default: throw "UserType Error!"
   }
 });
 
@@ -115,12 +145,33 @@ router.post("/getVisitedStations", function(req, res, next){
 router.post('/checkUser', function(req, res, next) {
   let login = req.body.login
   let password = req.body.password
-  console.log("User wants to check account!");
-  console.log(login, password);
+  console.log(`User wants to check account: ${login} ${password}`)
+  let UserType = whoIsUser(login, password)
+  let serverAns = {type: UserType, isExist: false}
 
-  var isTeamExist = teamManager.findTeam(login, password)
-  console.log("Send response:", isTeamExist);
-  res.end(JSON.stringify(isTeamExist));
+  switch (UserType){
+    case "player":
+    case "adminVolo":
+      serverAns.isExist = true
+      break
+    case "unknown":
+      serverAns.isExist = false
+      break
+    default: throw "UserType Error!"
+  }
+  res.end(JSON.stringify(serverAns))
 });
 
 module.exports = router;
+
+
+function whoIsUser(login, password){
+  if (login == adminData.login && password == adminData.password){
+    return "adminVolo"
+  }
+  if (teamManager.findTeam(login, password)){
+    return "player"
+  }
+  else 
+    return "unknown"
+}
