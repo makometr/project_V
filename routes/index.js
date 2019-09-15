@@ -182,6 +182,52 @@ router.post('/getQuestStationsNumber', function(req, res, next) {
   res.end(JSON.stringify(serverAns))
 });
 
+
+router.post('/getSuitableTeams', function(req, res, next) {
+  let login = req.body.login
+  let password = req.body.password
+  let questType = req.body.type
+  let stationNum = req.body.station
+  console.log(`User wants to getStationsNumber: ${login} ${password} ${questType} ${stationNum}`)
+  let UserType = whoIsUser(login, password)
+  let serverAns = {valid: false, teams: []}
+
+  switch (UserType){
+    case "adminVolo":
+      serverAns.valid = true
+      serverAns.teams = progressManager.getSuitableTeams(questType, stationNum)
+      break
+    case "unknown":
+    case "player":
+      break
+    default: throw "UserType Error!"
+  }
+  res.end(JSON.stringify(serverAns))
+});
+
+router.post('/markTeamVisited', function(req, res, next) {
+  let login = req.body.login
+  let password = req.body.password
+  let questType = req.body.type
+  let stationNum = req.body.station
+  let teamName = req.body.team
+  console.log(`User wants to markTeamVisited: ${login} ${password} ${questType} ${stationNum} ${teamName}`)
+  let UserType = whoIsUser(login, password)
+  let serverAns = {valid: false}
+
+  switch (UserType){
+    case "adminVolo":
+      serverAns.valid = true
+      progressManager.markTeamStationVisited(teamName, questType, stationNum)
+      break
+    case "unknown":
+    case "player":
+      break
+    default: throw "UserType Error!"
+  }
+  res.end(JSON.stringify(serverAns))
+});
+
 module.exports = router;
 
 

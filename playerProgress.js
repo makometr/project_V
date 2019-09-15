@@ -96,6 +96,13 @@ class TeamProgressManager {
             ans.push(station.isVisited)
         return ans
     }
+
+    getSuitableTeams(quest, station){
+        let ans = this.teamProgress.filter(team => team.currentQuestType == parseInt(quest))
+        ans = ans.filter(team => team.progress[quest][station].isVisited == false)
+        ans = ans.map(team => team.teamName)
+        return ans
+    }
 }
 
 

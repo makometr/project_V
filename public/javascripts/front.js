@@ -210,10 +210,12 @@ function rollStation(rolledBlockID){
 
 // volo
 
+var questVolo = -1
+var stationVolo = -1
+
 function chooseStationByVolo(questType, stationNumber, liID){
-    questType = parseInt(questType)
-    stationNumber = parseInt(stationNumber)
-    // console.log("Choose", questType, stationNumber)
+    questVolo = parseInt(questType)
+    stationVolo = parseInt(stationNumber)
 
     let ulElem = document.getElementById("stationList") 
     for (let child of ulElem.children){
@@ -232,6 +234,8 @@ function chooseQuestByVolo(buttonIDs, index, stationParentID, stationListID){
         button.style.fontWeight = "normal"
     }
     document.getElementById(buttonIDs[index]).style.fontWeight = "bold"
+    questVolo = -1
+    stationVolo = -1
 
     let rolledElem = document.getElementById(stationParentID);
     rolledElem.className += " w3-show";
@@ -256,9 +260,86 @@ function chooseQuestByVolo(buttonIDs, index, stationParentID, stationListID){
             }
         }
     }); 
+}
 
 
+var teamNameVoloAccept = null
 
+function colorizeTeam(teamName, teamElemID){
+    teamNameVoloAccept = teamName
+    let ulElem = document.getElementById("teamList");
+    for (let child of ulElem.children){
+        child.className = child.className.replace(" w3-green", "")
+    }
 
+    let li = document.getElementById(teamElemID)
+    li.className += " w3-green"
+}
 
+function showTeams(modalID, listID){
+    if (questVolo == -1 || stationVolo == -1)
+        return
+    
+    $.post("/getSuitableTeams", {login: window.localStorage.getItem("login"),
+                                       password: window.localStorage.getItem("pass"),
+                                       type: questVolo,
+                                       station: stationVolo},
+    (data) => {
+        data = JSON.parse(data)
+        console.log("Response from server getSuitableTeams:", data)
+        if (data.valid == true){
+            let modal = document.getElementById(modalID)
+            modal.style.display = "block"
+
+            let ulParent = document.getElementById(listID)
+            while (ulParent.childElementCount > 0)
+                ulParent.removeChild(ulParent.firstChild)
+            for (let i = 0; i < data.teams.length; i++){
+                let node = document.createElement("li")
+                node.innerText = `${data.teams[i]}`
+                node.setAttribute(`onClick`, `colorizeTeam('${data.teams[i]}', 'team-${i}')`)
+                node.setAttribute('id', `team-${i}`)
+                node.setAttribute("style", "padding: 12px 0px 12px 8px; margin-top: 3px;")
+                node.setAttribute("class", "w3-large")
+                ulParent.appendChild(node)
+            }
+        }
+    }); 
+}
+
+function markTeamVisited(modalID){
+    if (teamNameVoloAccept){
+        console.log("Visited!")
+
+        $.post("/markTeamVisited", {login: window.localStorage.getItem("login"),
+                                     password: window.localStorage.getItem("pass"),
+                                     type: questVolo,
+                                     station: stationVolo,
+                                     team: teamNameVoloAccept},
+        (data) => {
+            data = JSON.parse(data)
+            console.log("Response from server markTeamVisited:", data)
+            if (data.valid == true){
+                teamNameVoloAccept = null
+                stationVolo = -1
+
+                document.getElementById(modalID).style.display='none'
+                let rolledElem = document.getElementById("stationParent");
+                rolledElem.className = rolledElem.className.replace(" w3-show", "");
+
+                // let ulParent = document.getElementById(listID)
+                // while (ulParent.childElementCount > 0)
+                //     ulParent.removeChild(ulParent.firstChild)
+                // for (let i = 0; i < data.teams.length; i++){
+                //     let node = document.createElement("li")
+                //     node.innerText = `${data.teams[i]}`
+                //     node.setAttribute(`onClick`, `colorizeTeam('${data.teams[i]}', 'team-${i}')`)
+                //     node.setAttribute('id', `team-${i}`)
+                //     node.setAttribute("style", "padding: 12px 0px 12px 8px; margin-top: 3px;")
+                //     node.setAttribute("class", "w3-large")
+                //     ulParent.appendChild(node)
+                // }
+            }
+        }); 
+    }
 }
