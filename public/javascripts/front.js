@@ -206,3 +206,59 @@ function rollStation(rolledBlockID){
         rolledElem.className = rolledElem.className.replace(" w3-show", "");
     }
 }
+
+
+// volo
+
+function chooseStationByVolo(questType, stationNumber, liID){
+    questType = parseInt(questType)
+    stationNumber = parseInt(stationNumber)
+    // console.log("Choose", questType, stationNumber)
+
+    let ulElem = document.getElementById("stationList") 
+    for (let child of ulElem.children){
+        child.className = child.className.replace(" w3-green", "")
+    }
+
+    let li = document.getElementById(liID)
+    li.className += " w3-green"
+
+
+}
+
+function chooseQuestByVolo(buttonIDs, index, stationParentID, stationListID){
+    for (let buttonID of buttonIDs){
+        let button = document.getElementById(buttonID);
+        button.style.fontWeight = "normal"
+    }
+    document.getElementById(buttonIDs[index]).style.fontWeight = "bold"
+
+    let rolledElem = document.getElementById(stationParentID);
+    rolledElem.className += " w3-show";
+
+    currQuestType = buttonIDs[index].charAt(buttonIDs[index].length-1)
+    $.post("/getQuestStationsNumber", {login: window.localStorage.getItem("login"),
+                                       password: window.localStorage.getItem("pass"),
+                                       type: currQuestType},
+    (data) => {
+        data = JSON.parse(data)
+        // console.log("Response from server getQuestStationsNumber:", data)
+        if (data.valid == true){
+            let ulParent = document.getElementById(stationListID)
+            while (ulParent.childElementCount > 0)
+                ulParent.removeChild(ulParent.firstChild)
+            for (let i = 0; i < data.number; i++){
+                let node = document.createElement("li")
+                node.innerText = `Станция ${i+1}`
+                node.setAttribute(`onClick`, `chooseStationByVolo(${currQuestType}, ${i}, 'station-${i}')`)
+                node.setAttribute('id', `station-${i}`)
+                ulParent.appendChild(node)
+            }
+        }
+    }); 
+
+
+
+
+
+}

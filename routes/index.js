@@ -4,6 +4,7 @@ var router = express.Router();
 var teamManager = require('../teams')
 teamManager.load()
 const progressManager = require("../playerProgress")
+const stationsManager = require("../stationsManager")
 
 const adminData = {
   login: "admin",
@@ -140,8 +141,6 @@ router.post("/getVisitedStations", function(req, res, next){
 });
 
 
-
-
 router.post('/checkUser', function(req, res, next) {
   let login = req.body.login
   let password = req.body.password
@@ -156,6 +155,27 @@ router.post('/checkUser', function(req, res, next) {
       break
     case "unknown":
       serverAns.isExist = false
+      break
+    default: throw "UserType Error!"
+  }
+  res.end(JSON.stringify(serverAns))
+});
+
+router.post('/getQuestStationsNumber', function(req, res, next) {
+  let login = req.body.login
+  let password = req.body.password
+  let questType = req.body.type
+  console.log(`User wants to getStationsNumber: ${login} ${password} ${questType}`)
+  let UserType = whoIsUser(login, password)
+  let serverAns = {valid: false, number: 0}
+
+  switch (UserType){
+    case "adminVolo":
+      serverAns.valid = true
+      serverAns.number = stationsManager.getNumOfStationsByQuestType(questType)
+      break
+    case "unknown":
+    case "player":
       break
     default: throw "UserType Error!"
   }

@@ -4,6 +4,33 @@ block content
   header(class="w3-container w3-card-4 w3-theme")
     h2(class="w3-center") Страница волонтёра
   div(class="w3-panel")
+    //- div(class="w3-row w3-padding-small")
+    //- div(class="w3-col w3-center")
+    //-   h3(class="w3-show-inline-block") Станция 1
+    div(class="w3-row w3-white w3-animate-right")
+      div(class="w3-col")
+        h3 Чтобы отметить команду:
+        h5 1) Выберите квест этой команды
+        h5 2) Выберите номер своей станции на этом квесте
+    hr(style="margin: 0px;")
+    div(class="w3-row w3-white w3-animate-right")
+      div(class="w3-col")
+        h3 Выбирите квест:
+      div(class="w3-bar")
+        button#Q-0(class="w3-bar-item w3-blue w3-large"
+               style="width:50%; text-decoration: underline;"
+               onClick="chooseQuestByVolo(['Q-0', 'Q-1'], 0, 'stationParent', 'stationList')") Взрослый
+        button#Q-1(class="w3-bar-item w3-yellow w3-large"
+               style="width:50%; text-decoration: underline;"
+               onClick="chooseQuestByVolo(['Q-0', 'Q-1'], 1, 'stationParent', 'stationList')") Супер
+    div#stationParent(class="w3-row w3-white w3-animate-right w3-hide")
+      div(class="w3-col")
+        h3 Выбирите станцию:
+        ul#stationList(class="w3-ul w3-card-1" style="width:100%")
+          //- li Jill
+          //- li Eve
+          //- li Adam
+
   footer(class="w3-container w3-theme" style="position:relative")
     .w3-left.w3-show-inline-block.w3-center
       p#TeamName
