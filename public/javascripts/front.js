@@ -2,8 +2,8 @@ function registerUser(){
     var login = document.getElementById("UserLogin").value;
     var password = document.getElementById("UserPassword").value;
     var parent = document.getElementById("MsgParent")
-    if (parent.childElementCount > 0)
-        parent.removeChild(parent.firstChild)
+    while (parent.childElementCount > 0)
+        parent.removeChild(parent.lastChild)
 
     // если что-то не заполнено, не отправляем
     if (login == "" || password == ""){
@@ -43,8 +43,8 @@ function checkUser(){
     var login = document.getElementById("UserLogin").value;
     var password = document.getElementById("UserPassword").value;
     var parent = document.getElementById("MsgParent")
-    if (parent.childElementCount > 0)
-        parent.removeChild(parent.firstChild)
+    while (parent.childElementCount > 0)
+        parent.removeChild(parent.lastChild)
 
     
     if (login == "" || password == ""){
