@@ -232,13 +232,16 @@ function chooseQuestByVolo(buttonIDs, index, stationParentID, stationListID){
     for (let buttonID of buttonIDs){
         let button = document.getElementById(buttonID);
         button.style.fontWeight = "normal"
+        button.style.textDecoration = "none"
     }
     document.getElementById(buttonIDs[index]).style.fontWeight = "bold"
+    document.getElementById(buttonIDs[index]).style.textDecoration = "underline"
     questVolo = -1
     stationVolo = -1
 
     let rolledElem = document.getElementById(stationParentID);
-    rolledElem.className += " w3-show";
+    if (rolledElem.className.includes("w3-show") == false)
+        rolledElem.className += " w3-show";
 
     currQuestType = buttonIDs[index].charAt(buttonIDs[index].length-1)
     $.post("/getQuestStationsNumber", {login: window.localStorage.getItem("login"),
@@ -326,19 +329,6 @@ function markTeamVisited(modalID){
                 document.getElementById(modalID).style.display='none'
                 let rolledElem = document.getElementById("stationParent");
                 rolledElem.className = rolledElem.className.replace(" w3-show", "");
-
-                // let ulParent = document.getElementById(listID)
-                // while (ulParent.childElementCount > 0)
-                //     ulParent.removeChild(ulParent.firstChild)
-                // for (let i = 0; i < data.teams.length; i++){
-                //     let node = document.createElement("li")
-                //     node.innerText = `${data.teams[i]}`
-                //     node.setAttribute(`onClick`, `colorizeTeam('${data.teams[i]}', 'team-${i}')`)
-                //     node.setAttribute('id', `team-${i}`)
-                //     node.setAttribute("style", "padding: 12px 0px 12px 8px; margin-top: 3px;")
-                //     node.setAttribute("class", "w3-large")
-                //     ulParent.appendChild(node)
-                // }
             }
         }); 
     }

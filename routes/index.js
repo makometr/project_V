@@ -84,8 +84,6 @@ router.post('/createUser', function(req, res, next) {
   if (isTeamExist == false){
     teamManager.addTeam(login, password)
     progressManager.addTeam(login)
-    // progressManager.chooseQuestType(login, 1)
-    // progressManager.markTeamStationVisited(login, 0, 0)
   }
   console.log("Send response:", !isTeamExist);
   res.end(JSON.stringify(!isTeamExist));
