@@ -1,14 +1,14 @@
 extends layout
 
 block content
-  header(class="w3-container w3-card-4 w3-theme")
-    h1(class="w3-center") Супер квест
+  header(class="w3-container w3-card-4 w3-theme-l1")
+    h1(class="w3-center") Суперквест
   div(class="w3-panel")
     div.StationBlock#station-0(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-0')")
         h3(class="w3-show-inline-block") Станция 1
     div#accordion-0(class="w3-row w3-white w3-hide w3-animate-left")
-      div(class="w3-col w3-margin-left")
+      div(class="w3-col w3-margin-left" style="box-shadow: inset 0 0 10px #000000;")
         h6 Описание станции 1
         h6 Второй абзац
 

@@ -96,8 +96,7 @@ router.post("/acceptQuest", function(req, res, next){
   console.log("Data:", login, password, questType)
 
   if (teamManager.findTeam(login, password)){
-    if (questType != 0 && questType != 1 && questType != -1){
-      res.end()
+    if (questType != 0 && questType != 1){
       res.end(JSON.stringify({isTypeCorrect: false}))
     }
     else {

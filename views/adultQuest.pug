@@ -1,13 +1,13 @@
 extends layout
 
-mixin image(num)
+mixin image(quest, station, num)
   div.w3-display-container
-    img.w3-center.w3-image.w3-border(src=`/images/1-1/${num}.jpg` width="90%" align="center" style=" margin-bottom: 5px;") 
+    img.w3-center.w3-image.w3-border(src=`/images/${quest}-${station}/${num}.jpg` width="90%" align="center" style=" margin-bottom: 5px;") 
     div.w3-display-topleft.w3-container(style="margin-top: 10px; font-size: 2em; color: black; text-shadow: 0px 3px 0px #b2a98f,0px 14px 10px rgba(0,0,0,0.15),0px 24px 2px rgba(0,0,0,0.1),0px 34px 30px rgba(0,0,0,0.1);") #{num}.
 
 block content
-  header(class="w3-container w3-card-4 w3-theme-l2")
-    h1(class="w3-center") Взрослый квест
+  header(class="w3-container w3-card-4 w3-theme-l1")
+    h1(class="w3-center") Маршрут "Лапки"
   div(class="w3-panel")
     div.StationBlock#station-0(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-0')")
@@ -17,47 +17,55 @@ block content
         h4(style="font-weight: bold;") Задание
         h6 Определить, кто из представленных животных одомашнен.
         each val in [1,2,3,4,5,6,7,8]
-          +image(val)
+          +image(1,1,val)
+
 
     div.StationBlock#station-1(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-1')")
         h3(class="w3-show-inline-block") Станция 2
     div#accordion-1(class="w3-row w3-white w3-hide w3-animate-left")
       div(class="w3-col w3-margin-left")
-        h6 Описание станции 2
-        h6 Второй абзац
+        h4(style="font-weight: bold;") Задание
+        h6 На столах у волонтёров🐾
 
     div.StationBlock#station-2(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-2')")
         h3(class="w3-show-inline-block") Станция 3
     div#accordion-2(class="w3-row w3-white w3-hide w3-animate-left")
       div(class="w3-col w3-margin-left")
-        h6 Описание станции 3
-        h6 Второй абзац
+        h4(style="font-weight: bold;") Задание
+        h6 Тут что-то с хвостами
+        h6 Определить животных по хвостику.
+        each val in [1,2,3,4,5,6]
+          +image(1,3,val)
 
     div.StationBlock#station-3(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-3')")
         h3(class="w3-show-inline-block") Станция 4
     div#accordion-3(class="w3-row w3-white w3-hide w3-animate-left")
       div(class="w3-col w3-margin-left")
-        h6 Описание станции 4
-        h6 Второй абзац
+        h4(style="font-weight: bold;") Задание
+        h6 Какие продукты опасны для здоровья собаки, кошки, крысы, хомяка?
+        each val in [1,2,3,4,5,6,7,8,9,10]
+          +image(1,4,val)
 
     div.StationBlock#station-4(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-4')")
         h3(class="w3-show-inline-block") Станция 5
     div#accordion-4(class="w3-row w3-white w3-hide w3-animate-left")
       div(class="w3-col w3-margin-left")
-        h6 Описание станции 5
-        h6 Второй абзац
+        h4(style="font-weight: bold;") Задание
+        h6 На столах у волонтёров🐾
 
     div.StationBlock#station-5(class="w3-row w3-light-grey w3-padding-small")
       div(class="w3-col w3-center" onClick="rollStation('accordion-5')")
         h3(class="w3-show-inline-block") Станция 6
     div#accordion-5(class="w3-row w3-white w3-hide w3-animate-left")
       div(class="w3-col w3-margin-left")
-        h6 Описание станции 6
-        h6 Второй абзац
+        h4(style="font-weight: bold;") Задание
+        h6 Определить, кто из представленных животных занесён в Красную книгу (по Ленобласти).
+        each val in [1,2,3,4,5,6,7,8,9,10]
+          +image(1,6,val)
         
   div#modalWinner.w3-modal(style="padding-top: 150px;")
     div(class="w3-modal-content w3-border")

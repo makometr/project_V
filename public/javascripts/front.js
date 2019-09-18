@@ -166,15 +166,15 @@ var choosedQuest = -1
 function chooseQuest(questBlockID){
     let elemsChoosen = document.getElementsByClassName("QuestBlockChoose")
     for (elem of elemsChoosen){
-        elem.classList.replace("w3-light-green", "w3-light-grey")
+        // elem.classList.replace("w3-light-green", "w3-light-grey")
         elem.style.borderBottomColor = "#ccc"
         elem.style.borderTopColor = "#ccc"
     }
 
     let questBlock = document.getElementById(questBlockID)
-    questBlock.classList.replace("w3-light-grey", "w3-light-green")
-    questBlock.style.borderBottomColor = "green"
-    questBlock.style.borderTopColor = "green"
+    // questBlock.classList.replace("w3-light-grey", "w3-light-green")
+    questBlock.style.borderBottomColor = "lightgreen"
+    questBlock.style.borderTopColor = "lightgreen"
 
     choosedQuest = parseInt(questBlockID.charAt(questBlockID.length-1))
 }
@@ -187,7 +187,7 @@ function acceptQuest(){
                 data = JSON.parse(data)
                 console.log("Response from server checking:", data)
                 if (data.isTypeCorrect == true)
-                document.location.href = "/seeStations?" + getBody();
+                    document.location.href = "/seeStations?" + getBody();
     });   
 }
 
