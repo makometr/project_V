@@ -33,14 +33,21 @@ router.get('/register', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  if (!req.query.login  || !req.query.password || req.query.login == "null" || req.query.password == "null"){
-    res.render('auto', { title: 'Вход', type: 'login' });
-  }
-  else if (req.query.login == "admin" && req.query.password == "kek"){
-    res.render('volunteer')
-  }
-  else {
-    res.render('choose', { title: "Выбор квеста"});
+  let login = req.query.login
+  let password = req.query.password
+  let UserType = whoIsUser(login, password)
+
+  switch (UserType){
+    case "player":
+        res.render('choose', { title: "Выбор квеста"});
+      break
+    case "adminVolo":
+        res.render('volunteer')
+      break
+    case "unknown":
+        res.render('auto', { title: 'Вход', type: 'login' });
+      break
+    default: throw "UserType Error!"
   }
 });
 
