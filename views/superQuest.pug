@@ -1,5 +1,22 @@
 extends layout
 
+mixin selectDoctor(index, descr)
+  div(class="w3-white")
+    div(class="w3-col s11 w3-margin-left")
+      h4(style="font-weight: bold;") Специалист #{index}
+      h6 #{descr}
+  div(class="w3-row w3-center-align dropdown" style="margin-left: 9px;")
+    select(name="one" class="dropdown-select")
+      option(value="") Выберите название...
+      option(value="1") Ипполог
+      option(value="2") Фелинолог
+      option(value="3") Кинолог
+      option(value="3") Родентолог
+      option(value="3") Герпетолог
+      option(value="3") Орнитолог
+      option(value="3") Ихтиопатолог
+  hr(style="display: block;margin-top: 0.5em; margin-bottom: 0.5em;margin-left: auto; margin-right: auto; border-style: inset; border-width: 1px;")
+
 block content
   header(class="w3-container w3-card-4 w3-theme-l1")
     h1(class="w3-center") МегаКвест
@@ -44,9 +61,16 @@ block content
     div#accordion-4(class="w3-row w3-white w3-hide w3-animate-left")
       div(class="w3-col s11 w3-margin-left")
         h4(style="font-weight: bold;") Задание
-        h6 Соотнеси название узкоспециализированного ветеринара с животным, на которых он специализируется.
-
-  div#modalWinner.w3-modal(style="padding-top: 150px;")
+        h6 Соотнеси название узкоспециализированного ветеринара с животным, на которых он специализируется.    
+      +selectDoctor(1, "Данный специалист работает с лошадками.")
+      +selectDoctor(2, "Данный специалист работает с кошками.")
+      +selectDoctor(3, "Данный специалист работает с собаками.")
+      +selectDoctor(4, "Данный специалист работает с грызунами.")
+      +selectDoctor(5, "Данный специалист работает с рептилиями.")
+      +selectDoctor(6, "Данный специалист работает с птицами.")
+      +selectDoctor(7, "Данный специалист работает с рыбами.")
+    
+  div#modalWinner.w3-modal(style="padding-top: 150px;") 
     div(class="w3-modal-content w3-border")
       header(class="w3-container w3-theme w3-center")
         h2 Поздравляем!
